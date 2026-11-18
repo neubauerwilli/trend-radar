@@ -1,6 +1,7 @@
 """Tests für scripts/ideas.py. Start: python -m unittest discover tests"""
 
 import json
+import re
 import os
 import sys
 import tempfile
@@ -95,6 +96,45 @@ class IdeasTest(unittest.TestCase):
         with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test"}, clear=False):
             os.environ.pop("IDEAS_ENGINE", None)
             self.assertFalse(ideas.use_claude())
+
+    def test_repo_description_does_not_make_brand_topic(self):
+        # Demo-Fehler: Alibaba-Repo landete unter „Claude & Anthropic“, weil die
+        # Beschreibung Claude Code erwähnte.
+        repo = ideas.Entry("repo", "github", "QwenLM/qwen-code", "QwenLM qwen-code qwen code", "u", "u",
+                           desc="An open-source coding agent, alternative to Claude Code")
+        self.assertNotEqual(ideas.classify(repo), "Claude & Anthropic")
+        multi = ideas.Entry("repo", "github", "acme/llm-gateway", "acme llm-gateway llm gateway", "u", "u",
+                            desc="One API for OpenAI, Claude and Gemini")
+        self.assertNotIn(ideas.classify(multi), {"Claude & Anthropic", "OpenAI & ChatGPT", "Google Gemini"})
+        own = ideas.Entry("repo", "github", "anthropics/claude-code", "anthropics claude-code claude code", "u", "u",
+                          desc="Agentic coding tool")
+        self.assertEqual(ideas.classify(own), "Claude & Anthropic")
+
+    def test_brand_topic_never_showcases_foreign_repo(self):
+        news = [e for e in self.news if e.source == "r/ClaudeAI"]
+        foreign = ideas.Entry("repo", "github", "alibaba/agentscope", "alibaba agentscope agentscope", "u", "u",
+                              stars_week=9000, desc="Multi-agent platform, works with Claude")
+        out = ideas.build_output(news, [foreign])
+        claude = next(t for t in out["topics"] if t["topic"] == "Claude & Anthropic")
+        for key in ("short", "carousel", "long_video"):
+            self.assertNotIn("alibaba", claude[key])
+
+    def test_templates_read_correctly_for_every_topic(self):
+        # Alle Vorlagen-Varianten für alle Katalog-Themen erzeugen und auf
+        # typische Grammatik-Brüche prüfen.
+        for d in ideas.CATALOG:
+            e = ideas.Entry("news", "hackernews", f"Headline about {d.name}", "x", "u", "u", 100, 50)
+            t = ideas.Topic(d.name, [e], d)
+            f = ideas._facts(t)
+            for day in range(40):
+                seed = f"2026-11-{day:02d}|{d.name}|"
+                text = "\n".join([ideas.idea_short(f, seed), ideas.idea_carousel(f, seed), ideas.idea_long(f, seed)])
+                self.assertNotIn("Wenn du", text)
+                self.assertNotRegex(text, r"wollen bist|nutzen bist|Was [^.]*, jetzt tun")
+                self.assertNotIn("  ", text)
+                # Themennamen nur mit Doppelpunkt oder in „…“ einbauen, nie frei im Satz
+                # („Warum KI-Agenten gerade explodiert“, „zu Lokale KI“).
+                self.assertNotRegex(text, r"(über|zu|Warum|mir) " + re.escape(d.name))
 
 
 if __name__ == "__main__":

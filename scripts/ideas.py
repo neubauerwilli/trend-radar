@@ -48,19 +48,20 @@ class TopicDef:
     name: str
     patterns: tuple[str, ...]
     angle: str          # Warum das Publikum das interessiert
-    audience: str       # Für wen das Thema relevant ist
+    audience: str       # Für wen das Thema relevant ist; muss nach „für“ passen
+    brand: bool = False # Anbieter-Thema: bei Repos zählt nur Name/Owner, nicht die Beschreibung
 
 
 CATALOG: tuple[TopicDef, ...] = (
     TopicDef("Claude & Anthropic",
-             (r"\bclaude\b", r"\banthropic\b", r"\bsonnet\b", r"\bopus\b", r"\bhaiku\b", r"claude[- ]code"),
-             "was sich für alle ändert, die täglich mit Claude arbeiten", "Claude-Nutzer"),
+             (r"\bclaude\b", r"\banthropics?\b", r"\bclaude (sonnet|opus|haiku)\b"),
+             "was sich für alle ändert, die täglich mit Claude arbeiten", "Claude-Nutzer", brand=True),
     TopicDef("OpenAI & ChatGPT",
              (r"\bopenai\b", r"\bchatgpt\b", r"\bgpt-?\d", r"\bsora\b", r"\baltman\b", r"\bcodex\b"),
-             "was OpenAI gerade vorhat und was davon wirklich neu ist", "ChatGPT-Nutzer"),
+             "was OpenAI gerade vorhat und was davon wirklich neu ist", "ChatGPT-Nutzer", brand=True),
     TopicDef("Google Gemini",
-             (r"\bgemini\b", r"\bdeepmind\b", r"\bgemma\b", r"\bveo\b", r"google (ai|labs)"),
-             "wo Google im KI-Rennen gerade steht", "Google-Nutzer"),
+             (r"\bgemini\b", r"\bdeepmind\b", r"\bveo\b", r"\bgoogle[- ](ai|labs|deepmind|gemini)\b"),
+             "wo Google im KI-Rennen gerade steht", "Google-Nutzer", brand=True),
     TopicDef("KI-Agenten",
              (r"\bagents?\b", r"\bagentic\b", r"multi-agent", r"\bautonomous\b", r"\blanggraph\b", r"\bcrewai\b", r"\bautogen\b"),
              "was KI-Agenten heute schon selbstständig erledigen können", "Leute, die Arbeit automatisieren wollen"),
@@ -73,7 +74,8 @@ CATALOG: tuple[TopicDef, ...] = (
              "wie man KI mit eigenen Tools und Daten verbindet", "Bastler und Entwickler"),
     TopicDef("Open-Source-Modelle",
              (r"\bllama\b", r"\bmistral\b", r"\bqwen\b", r"\bdeepseek\b", r"open[- ]weights?", r"open[- ]source (model|llm)",
-              r"hugging ?face", r"\bkimi\b", r"\bphi-\d"),
+              r"hugging ?face", r"\bkimi\b", r"\bphi-\d", r"\bgemma\b", r"\bqwenlm\b", r"\balibaba\b",
+              r"\bmeta-llama\b", r"\bmistralai\b", r"\bdeepseek-ai\b", r"\bmoonshot"),
              "ob offene Modelle mit den großen Anbietern mithalten", "Technik-Interessierte"),
     TopicDef("Lokale KI",
              (r"\bollama\b", r"llama\.cpp", r"\bgguf\b", r"on-device", r"\blocal(ly)?\b", r"self-host", r"\bmlx\b"),
@@ -137,13 +139,15 @@ class Entry:
     kind: str           # "news" oder "repo"
     source: str         # hackernews, r/ClaudeAI, r/artificial, github
     title: str
-    text: str           # Text für die Themenerkennung
+    text: str           # Titel bzw. "owner repo" – stärkstes Signal
     url: str
     link: str           # bevorzugter Link für "sources" (Diskussion bzw. Repo)
     points: int = 0
     comments: int = 0
     stars_week: int = 0
     heat: float = 0.0
+    desc: str = ""      # Repo-Beschreibung – schwächeres Signal
+    name_match: bool = False  # Thema wurde über Titel/Name erkannt (nicht nur Beschreibung)
 
 
 def _int(value) -> int:
@@ -194,13 +198,14 @@ def load_github(path: Path) -> list[Entry]:
         if not name:
             continue
         desc = (it.get("description") or "").strip()
-        repo_words = name.split("/")[-1].replace("-", " ").replace("_", " ")
+        owner, _, repo = name.partition("/")
         url = it.get("url") or f"https://github.com/{name}"
         out.append(Entry(
             kind="repo",
             source="github",
             title=name,
-            text=f"{repo_words} {desc}",
+            text=f"{owner} {repo} {repo.replace('-', ' ').replace('_', ' ')}",
+            desc=desc,
             url=url,
             link=url,
             stars_week=_int(it.get("stars_week")),
@@ -235,13 +240,26 @@ def score_entries(entries: list[Entry]) -> None:
 
 
 def classify(entry: Entry) -> str | None:
-    best, best_hits = None, 0
+    """Bestes Thema für einen Eintrag.
+
+    Treffer im Titel bzw. Repo-Namen zählen doppelt, Treffer in der Beschreibung einfach.
+    Anbieter-Themen (Claude, OpenAI, Gemini) zählen bei Repos nur über Name oder Owner:
+    Beschreibungen wie „Alternative zu Claude Code“ oder „unterstützt GPT, Claude und
+    Gemini“ machen ein Repo nicht zum Claude-Thema.
+    """
+    best, best_score, best_name_match = None, 0, False
     for topic, regexes in _COMPILED:
-        hits = sum(1 for rx in regexes if rx.search(entry.text))
-        if hits > best_hits:
-            best, best_hits = topic.name, hits
+        name_hits = sum(1 for rx in regexes if rx.search(entry.text))
+        desc_hits = sum(1 for rx in regexes if entry.desc and rx.search(entry.desc))
+        if topic.brand and entry.kind == "repo":
+            desc_hits = 0
+        score = 2 * name_hits + desc_hits
+        if score > best_score:
+            best, best_score, best_name_match = topic.name, score, name_hits > 0
     if best is None:
         best = SOURCE_DEFAULT_TOPIC.get(entry.source.lower())
+        best_name_match = best is not None
+    entry.name_match = best_name_match
     return best
 
 
@@ -279,14 +297,14 @@ def build_topics(entries: list[Entry]) -> list[Topic]:
 
     # Nicht zugeordnete Beiträge: gemeinsames Schlagwort in mindestens zwei Beiträgen
     # (z. B. ein neuer Produktname) wird zu einem eigenen Thema.
-    counts = Counter(k for e in leftovers for k in _keywords(e.text))
+    counts = Counter(k for e in leftovers for k in _keywords(f"{e.text} {e.desc}"))
     for word, n in counts.most_common():
         if n < 2:
             break
-        group = [e for e in leftovers if word in _keywords(e.text)]
+        group = [e for e in leftovers if word in _keywords(f"{e.text} {e.desc}")]
         if len(group) < 2:
             continue
-        label = next((m for m in re.findall(r"[A-Za-z][A-Za-z0-9.+-]{2,}", " ".join(e.text for e in group))
+        label = next((m for m in re.findall(r"[A-Za-z][A-Za-z0-9.+-]{2,}", " ".join(f"{e.text} {e.desc}" for e in group))
                       if m.lower() == word), word)
         topics.setdefault(label, Topic(label)).entries.extend(group)
         leftovers = [e for e in leftovers if e not in group]
@@ -321,16 +339,18 @@ def _pick(options: list[str], seed: str) -> str:
 def _facts(topic: Topic) -> dict:
     ents = topic.sorted_entries
     news = [e for e in ents if e.kind == "news"]
-    repos = [e for e in ents if e.kind == "repo"]
-    lead = ents[0]
+    # Als Aufhänger nur Repos, deren Name/Owner selbst zum Thema passt.
+    repos = [e for e in ents if e.kind == "repo" and e.name_match]
+    lead = news[0] if news else ents[0]
+    # Zweiter Blickwinkel nur aus News; Repos haben ihre eigene Folie bzw. ihr eigenes Kapitel.
+    others = [e for e in news if e is not lead]
     d = topic.definition
     source_names = {"hackernews": "Hacker News", "github": "GitHub"}
     srcs = sorted({source_names.get(e.source, e.source) for e in ents})
     return {
         "topic": topic.name,
         "lead": _shorten(lead.title, 90),
-        "second": _shorten(ents[1].title, 90) if len(ents) > 1 else None,
-        "third": _shorten(ents[2].title, 90) if len(ents) > 2 else None,
+        "second": _shorten(others[0].title, 90) if others else None,
         "repo": repos[0].title if repos else None,
         "repo_stars": repos[0].stars_week if repos else 0,
         "comments": sum(e.comments for e in news),
@@ -356,9 +376,9 @@ def _buzz(f: dict) -> str:
 def idea_short(f: dict, seed: str) -> str:
     hook = _pick([
         f"„{f['topic']}“ ist heute das Thema, über das alle reden. Hier ist der Grund in 30 Sekunden.",
-        f"Das hast du heute über {f['topic']} verpasst.",
-        f"Eine Schlagzeile, {f['comments'] or 'viele'} Kommentare: Warum {f['topic']} gerade explodiert.",
-        f"Stopp. Wenn du {f['audience'].split(' und ')[0]} bist, musst du das zu {f['topic']} wissen.",
+        f"Das hast du heute zum Thema „{f['topic']}“ verpasst.",
+        f"Eine Schlagzeile, {f['comments'] or 'viele'} Kommentare: Warum das Thema „{f['topic']}“ gerade explodiert.",
+        f"Stopp. Das hier zum Thema „{f['topic']}“ ist wichtig für {f['audience']}.",
     ], seed + "short-hook")
     lines = [
         f"Hook: {hook}",
@@ -379,9 +399,9 @@ def idea_short(f: dict, seed: str) -> str:
 def idea_carousel(f: dict, seed: str) -> str:
     title = _pick([
         f"{f['topic']}: Was diese Woche wirklich passiert ist",
-        f"5 Dinge, die du über {f['topic']} jetzt wissen musst",
+        f"5 Dinge, die du zum Thema „{f['topic']}“ jetzt wissen musst",
         f"{f['topic']} erklärt – in 7 Folien",
-        f"Hype oder echt? {f['topic']} im Faktencheck",
+        f"Hype oder echt? „{f['topic']}“ im Faktencheck",
     ], seed + "carousel-title")
     slides = [
         f"Titel: {title}",
@@ -405,10 +425,10 @@ def idea_carousel(f: dict, seed: str) -> str:
 
 def idea_long(f: dict, seed: str) -> str:
     title = _pick([
-        f"{f['topic']} verstehen: Was hinter dem Hype steckt",
-        f"Ich habe mir {f['topic']} genau angesehen – das ist mein Fazit",
+        f"{f['topic']}: Was hinter dem Hype steckt",
+        f"Ich habe mir das Thema „{f['topic']}“ genau angesehen – das ist mein Fazit",
         f"{f['topic']}: Die ganze Geschichte, einfach erklärt",
-        f"Warum gerade alle über {f['topic']} reden (und was du daraus machst)",
+        f"Warum gerade alle über das Thema „{f['topic']}“ reden (und was du daraus machst)",
     ], seed + "long-title")
     parts = [
         f"Titel: {title} (10–15 Min.)",
@@ -425,7 +445,7 @@ def idea_long(f: dict, seed: str) -> str:
         parts.append("4. Praxis (7–11 Min.): Ein konkretes Beispiel durchspielen, Schritt für Schritt.")
     parts += [
         f"5. Einordnung (11–13 Min.): {f['angle'][0].upper() + f['angle'][1:]}.",
-        f"6. Fazit (13–15 Min.): Was {f['audience']} jetzt tun sollten, plus Frage an die Community.",
+        f"6. Fazit (13–15 Min.): Konkrete nächste Schritte für {f['audience']}, dazu eine Frage an die Community.",
     ]
     return "\n".join(parts)
 
@@ -499,7 +519,7 @@ def _claude_topic_brief(topics: list[Topic]) -> str:
         lines = [f"{i}. {t.name}"]
         for e in t.sorted_entries[:6]:
             if e.kind == "repo":
-                lines.append(f"   - GitHub-Repo {e.title}: {e.text.strip()} ({e.stars_week} neue Sterne diese Woche)")
+                lines.append(f"   - GitHub-Repo {e.title}: {e.desc or 'ohne Beschreibung'} ({e.stars_week} neue Sterne diese Woche)")
             else:
                 lines.append(f"   - {e.source}: „{e.title}“ ({e.points} Punkte, {e.comments} Kommentare)")
         blocks.append("\n".join(lines))

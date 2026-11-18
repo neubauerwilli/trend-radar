@@ -17,7 +17,11 @@ Liest `data/news.json` und `data/github.json` und schreibt `data/ideas.json` im 
    stärksten Beitrag derselben Quelle bezogen. Bei Repositories zählen die neuen Sterne der Woche.
 2. **Bündeln.** Jeder Beitrag kommt in genau ein Thema aus einem festen Katalog
    (z. B. „Claude & Anthropic“, „KI-Agenten“, „MCP & Tool-Anbindung“, „Lokale KI“). Entscheidend
-   sind Schlagwörter im Titel bzw. im Repo-Namen und der Beschreibung. Beiträge aus r/ClaudeAI
+   sind Schlagwörter im Titel bzw. im Repo-Namen und der Beschreibung; Treffer im Titel oder
+   Namen zählen doppelt. Für die Anbieter-Themen (Claude, OpenAI, Gemini) zählt bei Repos nur
+   Name oder Owner, nicht die Beschreibung: Ein Repo, das sich „Alternative zu Claude Code“
+   nennt, gehört nicht zum Claude-Thema. Als Aufhänger in den Ideen werden nur Repos genommen,
+   deren Name selbst zum Thema passt. Beiträge aus r/ClaudeAI
    ohne Treffer landen bei „Claude & Anthropic“. Taucht ein unbekanntes Schlagwort (etwa ein neuer
    Produktname) in mindestens zwei übrigen Beiträgen auf, wird daraus ein eigenes Thema.
 3. **Rangfolge.** Themen-Hitze = Summe der Beitrags-Hitze, mit 15 % Bonus je zusätzlicher Quelle
