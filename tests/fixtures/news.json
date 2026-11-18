@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-11-19T05:31:12Z",
+  "items": [
+    {"source": "hackernews", "title": "Claude Code now runs background agents in the cloud", "url": "https://example.com/claude-code-cloud", "points": 812, "comments": 344, "discussion_url": "https://news.ycombinator.com/item?id=1001"},
+    {"source": "hackernews", "title": "Show HN: An open-source MCP server for Postgres", "url": "https://example.com/mcp-postgres", "points": 410, "comments": 97, "discussion_url": "https://news.ycombinator.com/item?id=1002"},
+    {"source": "hackernews", "title": "Nvidia announces next-gen data center GPUs", "url": "https://example.com/nvidia", "points": 530, "comments": 260, "discussion_url": "https://news.ycombinator.com/item?id=1003"},
+    {"source": "hackernews", "title": "EU AI Act: first fines expected next year", "url": "https://example.com/eu-ai-act", "points": 388, "comments": 412, "discussion_url": "https://news.ycombinator.com/item?id=1004"},
+    {"source": "hackernews", "title": "Qwen 4 open weights beat GPT-5 on coding benchmarks", "url": "https://example.com/qwen4", "points": 690, "comments": 301, "discussion_url": "https://news.ycombinator.com/item?id=1005"},
+    {"source": "hackernews", "title": "Running a 70B model locally on a MacBook with MLX", "url": "https://example.com/mlx", "points": 275, "comments": 120, "discussion_url": "https://news.ycombinator.com/item?id=1006"},
+    {"source": "hackernews", "title": "Prompt injection in browser agents is still unsolved", "url": "https://example.com/prompt-injection", "points": 344, "comments": 188, "discussion_url": "https://news.ycombinator.com/item?id=1007"},
+    {"source": "r/ClaudeAI", "title": "Opus 5.5 feels way better at long refactors", "url": "https://reddit.com/r/ClaudeAI/1", "points": 1450, "comments": 233, "discussion_url": "https://reddit.com/r/ClaudeAI/1"},
+    {"source": "r/ClaudeAI", "title": "My workflow: Claude Code + MCP for my whole homelab", "url": "https://reddit.com/r/ClaudeAI/2", "points": 980, "comments": 141, "discussion_url": "https://reddit.com/r/ClaudeAI/2"},
+    {"source": "r/ClaudeAI", "title": "Usage limits changed again?", "url": "https://reddit.com/r/ClaudeAI/3", "points": 620, "comments": 310, "discussion_url": "https://reddit.com/r/ClaudeAI/3"},
+    {"source": "r/artificial", "title": "OpenAI raises another $40 billion at record valuation", "url": "https://example.com/openai-raise", "points": 2100, "comments": 640, "discussion_url": "https://reddit.com/r/artificial/1"},
+    {"source": "r/artificial", "title": "Study: AI agents complete 30% of real office tasks", "url": "https://example.com/agents-study", "points": 1300, "comments": 420, "discussion_url": "https://reddit.com/r/artificial/2"},
+    {"source": "r/artificial", "title": "Humanoid robots start shipping to warehouses", "url": "https://example.com/humanoid", "points": 900, "comments": 210, "discussion_url": "https://reddit.com/r/artificial/3"},
+    {"source": "r/artificial", "title": "Deepfake laws: what changes in 2027", "url": "https://example.com/deepfake", "points": 760, "comments": 190, "discussion_url": "https://reddit.com/r/artificial/4"}
+  ]
+}

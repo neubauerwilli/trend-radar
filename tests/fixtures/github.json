@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-11-19T05:32:40Z",
+  "repos": [
+    {"name": "acme/agent-kit", "url": "https://github.com/acme/agent-kit", "description": "Build multi-agent workflows in Python", "stars_week": 4120, "language": "Python", "stars_total": 18450},
+    {"name": "mcp-tools/postgres-mcp", "url": "https://github.com/mcp-tools/postgres-mcp", "description": "MCP server for Postgres databases", "stars_week": 2980, "language": "TypeScript", "stars_total": 7400},
+    {"name": "qwenlm/qwen4", "url": "https://github.com/qwenlm/qwen4", "description": "Qwen 4 open-weights models", "stars_week": 2700, "language": "Python", "stars_total": 30100},
+    {"name": "ml-explore/mlx-lm", "url": "https://github.com/ml-explore/mlx-lm", "description": "Run LLMs locally on Apple silicon", "stars_week": 1900, "language": "Python", "stars_total": 12000},
+    {"name": "someone/claude-skills", "url": "https://github.com/someone/claude-skills", "description": "A collection of skills for Claude Code", "stars_week": 1750, "language": null, "stars_total": 5200},
+    {"name": "vec/fastrag", "url": "https://github.com/vec/fastrag", "description": "Retrieval augmented generation with a tiny vector store", "stars_week": 1200, "language": "Rust", "stars_total": 3400},
+    {"name": "img/fluxlab", "url": "https://github.com/img/fluxlab", "description": "Image generation playground for Flux", "stars_week": 980, "language": "Python", "stars_total": 2100},
+    {"name": "voice/kokoro-tts", "url": "https://github.com/voice/kokoro-tts", "description": "Fast TTS voice model", "stars_week": 870, "language": "Python", "stars_total": 9000},
+    {"name": "sec/injection-bench", "url": "https://github.com/sec/injection-bench", "description": "Benchmark for prompt injection attacks on agents", "stars_week": 640, "language": "Python", "stars_total": 1300},
+    {"name": "dev/aicommit", "url": "https://github.com/dev/aicommit", "description": "CLI that writes commit messages", "stars_week": 600, "language": "Go", "stars_total": 4100}
+  ]
+}
