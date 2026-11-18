@@ -1,0 +1,38 @@
+name: GitHub-Trends prüfen
+
+# Testet scripts/github_trends.py bei Änderungen: erst offline gegen die
+# Beispielseite, dann einmal live gegen github.com/trending. Schreibt nichts
+# ins Repository; das Ergebnis steht im Log und als Artefakt.
+on:
+  pull_request:
+    paths:
+      - "scripts/github_trends.py"
+      - "tests/**"
+      - ".github/workflows/github-trends-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Offline-Tests
+        run: python -m unittest discover -s tests -v
+      - name: Live-Lauf gegen github.com/trending
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/github_trends.py --out "$RUNNER_TEMP/github.json"
+          cat "$RUNNER_TEMP/github.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: github-json
+          path: ${{ runner.temp }}/github.json
+          if-no-files-found: ignore
