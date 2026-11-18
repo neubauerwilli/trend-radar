@@ -36,6 +36,17 @@ jobs:
           for i in sorted(d["items"], key=lambda x: -x["points"])[:10]:
               print(f"- [{i['source']}] {i['points']} Pkt, {i['comments']} Komm.: {i['title']}")
           PY
+      - name: Reddit-Erreichbarkeit prüfen
+        run: |
+          UA="python:trend-radar-news-scanner:1.0 (+https://github.com/neubauerwilli/trend-radar)"
+          for u in \
+            "https://www.reddit.com/r/ClaudeAI/top/.rss?t=day" \
+            "https://old.reddit.com/r/ClaudeAI/top/.rss?t=day" \
+            "https://api.reddit.com/r/ClaudeAI/top?t=day&limit=5" \
+            "https://www.reddit.com/r/ClaudeAI/top.json?t=day&limit=5"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -A "$UA" "$u")
+            echo "$code  $u" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: news-json
