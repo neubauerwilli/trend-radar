@@ -1,0 +1,42 @@
+# Testlauf für den News-Scanner: läuft bei Änderungen an scripts/news.py,
+# zeigt, welche Quellen vom GitHub-Runner aus erreichbar sind, und lädt
+# die erzeugte news.json als Artefakt hoch. Committet nichts.
+name: News-Scanner prüfen
+
+on:
+  pull_request:
+    paths:
+      - "scripts/news.py"
+      - ".github/workflows/news-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: News holen
+        run: python scripts/news.py
+      - name: Ergebnis zusammenfassen
+        run: |
+          python - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("data/news.json"))
+          print(f"generated_at: {d['generated_at']}\n")
+          print("| Quelle | ok | via | Einträge | Fehler |\n|---|---|---|---|---|")
+          for k, v in d["sources"].items():
+              print(f"| {k} | {v['ok']} | {v.get('via','')} | {v['count']} | {v.get('error','')[:120]} |")
+          print()
+          for i in sorted(d["items"], key=lambda x: -x["points"])[:10]:
+              print(f"- [{i['source']}] {i['points']} Pkt, {i['comments']} Komm.: {i['title']}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: news-json
+          path: data/news.json
