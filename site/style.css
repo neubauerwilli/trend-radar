@@ -1,0 +1,100 @@
+:root {
+  --bg: #0b0d12;
+  --surface: #13161e;
+  --surface-2: #1a1e29;
+  --line: #262b38;
+  --text: #e8eaf0;
+  --muted: #9198a8;
+  --accent: #7c8cff;
+  --accent-soft: rgba(124, 140, 255, .14);
+  --hn: #ff8a3d;
+  --claude: #e0916b;
+  --artificial: #4fc3a1;
+  --warn: #f2c14e;
+  --radius: 14px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+.top {
+  position: sticky; top: 0; z-index: 5;
+  background: rgba(11, 13, 18, .85);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.top-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+h1 { font-size: 1.25rem; margin: 0; letter-spacing: -.01em; }
+h1::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); margin-right: 10px; vertical-align: 2px; }
+.meta { margin: 2px 0 0; color: var(--muted); font-size: .85rem; }
+.badge { font-size: .75rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: rgba(242, 193, 78, .15); color: var(--warn); white-space: nowrap; }
+.notice { margin: 16px 0 0; padding: 10px 14px; border-radius: 10px; background: rgba(242, 193, 78, .1); border: 1px solid rgba(242, 193, 78, .3); color: var(--warn); font-size: .9rem; }
+
+section { margin-top: 32px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px; }
+h2 { font-size: 1.05rem; margin: 0; }
+.hint { color: var(--muted); font-size: .85rem; }
+.empty { color: var(--muted); padding: 20px; border: 1px dashed var(--line); border-radius: var(--radius); text-align: center; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+.kpi .label { color: var(--muted); font-size: .8rem; }
+.kpi .value { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kpi .sub { color: var(--muted); font-size: .8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ideas { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.idea { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.idea-head { display: flex; align-items: center; gap: 10px; }
+.rank { flex: none; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; font-size: .85rem; background: var(--accent-soft); color: var(--accent); }
+.idea h3 { margin: 0; font-size: 1rem; line-height: 1.3; }
+.idea .score { margin-left: auto; color: var(--muted); font-size: .8rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fmt { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+.fmt .k { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.fmt p { margin: 0 0 .4em; font-size: .92rem; color: #d3d6df; }
+.fmt p:last-child { margin-bottom: 0; }
+.idea .src { font-size: .8rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.idea .src a { text-decoration: underline; text-underline-offset: 2px; }
+
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: none; font: inherit; font-size: .85rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; min-height: 36px; }
+.tab[aria-selected="true"] { background: var(--accent-soft); border-color: transparent; color: var(--text); }
+
+.news, .repos { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.news li, .repos li { padding: 14px 16px; border-top: 1px solid var(--line); }
+.news li:first-child, .repos li:first-child { border-top: 0; }
+.news .title { display: block; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+.row-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.src-tag { font-weight: 600; }
+.src-tag.hackernews { color: var(--hn); }
+.src-tag.claudeai { color: var(--claude); }
+.src-tag.artificial { color: var(--artificial); }
+.row-meta a { text-decoration: underline; text-underline-offset: 2px; }
+
+.repos li { display: grid; grid-template-columns: 28px 1fr auto; gap: 4px 12px; align-items: start; }
+.repos .pos { color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 600; padding-top: 1px; }
+.repos .name { font-weight: 600; overflow-wrap: anywhere; }
+.repos .desc { color: #c3c7d2; font-size: .9rem; margin-top: 2px; overflow-wrap: anywhere; }
+.repos .stars { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.repos .stars small { display: block; font-weight: 400; color: var(--muted); font-size: .75rem; }
+.bar { grid-column: 2 / 4; height: 4px; border-radius: 2px; background: var(--surface-2); margin-top: 8px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+
+.foot { color: var(--muted); font-size: .8rem; padding-top: 32px; padding-bottom: 40px; }
+
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .ideas { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  .kpi .value { font-size: 1.25rem; }
+}

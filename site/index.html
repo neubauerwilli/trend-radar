@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d12">
+  <title>KI-Trend-Radar</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%237c8cff' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%237c8cff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <div>
+        <h1>KI-Trend-Radar</h1>
+        <p class="meta" id="stand">Lade Daten …</p>
+      </div>
+      <span class="badge" id="sample-badge" hidden>Beispieldaten</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="notice" id="stale" hidden></p>
+
+    <section class="kpis" id="kpis" aria-label="Überblick"></section>
+
+    <section aria-labelledby="h-ideas">
+      <div class="sec-head">
+        <h2 id="h-ideas">Top 5 Themen und Content-Ideen</h2>
+      </div>
+      <div class="ideas" id="ideas"></div>
+    </section>
+
+    <section aria-labelledby="h-news">
+      <div class="sec-head">
+        <h2 id="h-news">Heiß diskutiert</h2>
+        <div class="tabs" id="tabs" role="tablist" aria-label="Quelle filtern"></div>
+      </div>
+      <ol class="news" id="news"></ol>
+    </section>
+
+    <section aria-labelledby="h-gh">
+      <div class="sec-head">
+        <h2 id="h-gh">GitHub-Trends der Woche</h2>
+        <span class="hint">neue Sterne in 7 Tagen</span>
+      </div>
+      <ol class="repos" id="repos"></ol>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    Quellen: Hacker News, r/ClaudeAI, r/artificial, GitHub. Aktualisierung täglich gegen 7 Uhr (Wien).
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

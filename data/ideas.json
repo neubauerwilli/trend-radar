@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-11-18T05:30:00Z",
+  "sample": true,
+  "topics": [
+    {
+      "topic": "Claude Code im Alltag",
+      "short": "Hook: „Ich lasse 4 KI-Agenten gleichzeitig für mich arbeiten.“ 30 Sekunden Bildschirmaufnahme, wie ein Projekt in Threads zerlegt wird.",
+      "carousel": "7 Folien: Problem → 3 Workflows → Vorher/Nachher-Zeit → häufigster Fehler → Call-to-Action „Speichern“.",
+      "long_video": "„Ich habe eine Woche nur mit KI-Agenten gearbeitet“: Setup, drei echte Aufgaben, was schiefging, Fazit mit Kosten.",
+      "score": 2000,
+      "sources": [
+        "https://news.ycombinator.com/"
+      ]
+    },
+    {
+      "topic": "Open-Source-Modelle holen auf",
+      "short": "Hook: „Dieses kostenlose Modell schlägt die Großen beim Programmieren.“ Benchmark-Zahl einblenden, eigene Mini-Probe zeigen.",
+      "carousel": "6 Folien: Was ist passiert → Benchmark-Grafik → Wo es noch hakt → Für wen es sich lohnt → Link in Bio.",
+      "long_video": "Praxistest: Drei Open-Source-Modelle gegen ein Bezahl-Modell bei denselben fünf Aufgaben, mit Bewertung.",
+      "score": 1700,
+      "sources": [
+        "https://news.ycombinator.com/"
+      ]
+    },
+    {
+      "topic": "EU-KI-Verordnung für Creator",
+      "short": "Hook: „Ab 2027 musst du das bei KI-Videos kennzeichnen.“ Drei Regeln in 40 Sekunden.",
+      "carousel": "8 Folien: Was gilt ab wann → Kennzeichnungspflicht → Beispiele erlaubt/nicht erlaubt → Checkliste.",
+      "long_video": "Erklärvideo mit Checkliste: Was die Verordnung für YouTube, Instagram und TikTok bedeutet, inkl. Fragen an einen Juristen.",
+      "score": 1400,
+      "sources": [
+        "https://news.ycombinator.com/"
+      ]
+    },
+    {
+      "topic": "KI-Video-Modelle",
+      "short": "Hook: „Dieser 2-Minuten-Clip ist komplett KI.“ Clip zeigen, dann Prompt auflösen.",
+      "carousel": "5 Folien: Prompt → Ergebnis-Stills → Kosten → Grenzen → Frage an die Community.",
+      "long_video": "Vergleich der aktuellen Video-Modelle mit einem gemeinsamen Drehbuch, Bewertung nach Qualität, Preis und Tempo.",
+      "score": 1100,
+      "sources": [
+        "https://news.ycombinator.com/"
+      ]
+    },
+    {
+      "topic": "Agenten zuverlässig testen",
+      "short": "Hook: „Warum dein KI-Agent in Produktion scheitert.“ Ein typischer Fehler, eine Lösung.",
+      "carousel": "7 Folien: 5 Testarten für Agenten mit je einem Beispiel und einer Faustregel.",
+      "long_video": "Tutorial: Eine Test-Suite für einen eigenen Agenten bauen, von Null bis zum automatischen Check.",
+      "score": 800,
+      "sources": [
+        "https://news.ycombinator.com/"
+      ]
+    }
+  ]
+}

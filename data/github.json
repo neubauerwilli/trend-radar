@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-11-18T05:30:00Z",
+  "sample": true,
+  "repos": [
+    {
+      "name": "beispiel/agent-kit",
+      "url": "https://github.com/",
+      "description": "Framework für mehrstufige KI-Agenten",
+      "stars_week": 4820,
+      "language": "Python",
+      "stars_total": 28920
+    },
+    {
+      "name": "beispiel/mcp-hub",
+      "url": "https://github.com/",
+      "description": "Sammlung von MCP-Servern",
+      "stars_week": 3910,
+      "language": "TypeScript",
+      "stars_total": 23460
+    },
+    {
+      "name": "beispiel/fast-infer",
+      "url": "https://github.com/",
+      "description": "Schnelle lokale Inferenz",
+      "stars_week": 3120,
+      "language": "Rust",
+      "stars_total": 18720
+    },
+    {
+      "name": "beispiel/rag-starter",
+      "url": "https://github.com/",
+      "description": "RAG-Vorlage mit Evaluierung",
+      "stars_week": 2550,
+      "language": "Python",
+      "stars_total": 15300
+    },
+    {
+      "name": "beispiel/llm-gateway",
+      "url": "https://github.com/",
+      "description": "Gateway für mehrere Modell-Anbieter",
+      "stars_week": 2180,
+      "language": "Go",
+      "stars_total": 13080
+    },
+    {
+      "name": "beispiel/voice-agent",
+      "url": "https://github.com/",
+      "description": "Sprach-Agent in Echtzeit",
+      "stars_week": 1960,
+      "language": "Python",
+      "stars_total": 11760
+    },
+    {
+      "name": "beispiel/ui-copilot",
+      "url": "https://github.com/",
+      "description": "KI-Assistent für Web-Apps",
+      "stars_week": 1745,
+      "language": "TypeScript",
+      "stars_total": 10470
+    },
+    {
+      "name": "beispiel/finetune-lab",
+      "url": "https://github.com/",
+      "description": "Notebooks fürs Feintuning",
+      "stars_week": 1490,
+      "language": "Jupyter Notebook",
+      "stars_total": 8940
+    },
+    {
+      "name": "beispiel/edge-vision",
+      "url": "https://github.com/",
+      "description": "Bildmodelle auf dem Handy",
+      "stars_week": 1215,
+      "language": "C++",
+      "stars_total": 7290
+    },
+    {
+      "name": "beispiel/prompt-tests",
+      "url": "https://github.com/",
+      "description": "Tests für Prompts",
+      "stars_week": 980,
+      "language": null,
+      "stars_total": 5880
+    }
+  ]
+}

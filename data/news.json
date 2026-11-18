@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-11-18T05:30:00Z",
+  "sample": true,
+  "items": [
+    {
+      "source": "hackernews",
+      "title": "Beispiel: Open-Source-Modell schlägt GPT-Klasse bei Code-Benchmarks",
+      "url": "https://example.com/1",
+      "points": 812,
+      "comments": 344,
+      "discussion_url": "https://news.ycombinator.com/",
+      "created_at": "2026-11-17T19:02:00Z"
+    },
+    {
+      "source": "hackernews",
+      "title": "Beispiel: Wie wir Agenten in Produktion testen",
+      "url": "https://example.com/2",
+      "points": 521,
+      "comments": 203,
+      "discussion_url": "https://news.ycombinator.com/",
+      "created_at": "2026-11-17T14:10:00Z"
+    },
+    {
+      "source": "hackernews",
+      "title": "Beispiel: MCP-Server für lokale Datenbanken",
+      "url": "https://example.com/3",
+      "points": 298,
+      "comments": 87,
+      "discussion_url": "https://news.ycombinator.com/",
+      "created_at": "2026-11-17T09:40:00Z"
+    },
+    {
+      "source": "hackernews",
+      "title": "Beispiel: Die Kosten von Inferenz sind 2026 um 80 % gefallen",
+      "url": "https://example.com/4",
+      "points": 244,
+      "comments": 131,
+      "discussion_url": "https://news.ycombinator.com/",
+      "created_at": "2026-11-17T08:00:00Z"
+    },
+    {
+      "source": "r/ClaudeAI",
+      "title": "Beispiel: Mein Workflow mit Claude Code und Git-Worktrees",
+      "url": "https://www.reddit.com/r/ClaudeAI/",
+      "points": 1430,
+      "comments": 256,
+      "discussion_url": "https://www.reddit.com/r/ClaudeAI/",
+      "created_at": "2026-11-17T21:00:00Z"
+    },
+    {
+      "source": "r/ClaudeAI",
+      "title": "Beispiel: Projekte mit mehreren Threads parallel laufen lassen",
+      "url": "https://www.reddit.com/r/ClaudeAI/",
+      "points": 690,
+      "comments": 98,
+      "discussion_url": "https://www.reddit.com/r/ClaudeAI/",
+      "created_at": "2026-11-17T16:00:00Z"
+    },
+    {
+      "source": "r/ClaudeAI",
+      "title": "Beispiel: Skills, die meinen Alltag verändert haben",
+      "url": "https://www.reddit.com/r/ClaudeAI/",
+      "points": 402,
+      "comments": 77,
+      "discussion_url": "https://www.reddit.com/r/ClaudeAI/",
+      "created_at": "2026-11-17T11:00:00Z"
+    },
+    {
+      "source": "r/artificial",
+      "title": "Beispiel: EU-KI-Verordnung, was ab 2027 für Creator gilt",
+      "url": "https://www.reddit.com/r/artificial/",
+      "points": 975,
+      "comments": 412,
+      "discussion_url": "https://www.reddit.com/r/artificial/",
+      "created_at": "2026-11-17T18:30:00Z"
+    },
+    {
+      "source": "r/artificial",
+      "title": "Beispiel: Video-Modelle erzeugen jetzt 2-Minuten-Clips am Stück",
+      "url": "https://www.reddit.com/r/artificial/",
+      "points": 561,
+      "comments": 140,
+      "discussion_url": "https://www.reddit.com/r/artificial/",
+      "created_at": "2026-11-17T12:15:00Z"
+    },
+    {
+      "source": "r/artificial",
+      "title": "Beispiel: Sind KI-Detektoren überhaupt zuverlässig?",
+      "url": "https://www.reddit.com/r/artificial/",
+      "points": 318,
+      "comments": 266,
+      "discussion_url": "https://www.reddit.com/r/artificial/",
+      "created_at": "2026-11-17T07:45:00Z"
+    }
+  ]
+}
